@@ -5,12 +5,10 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: {
-    app: path.resolve(__dirname, 'src/index.js'),
-  },
+  entry: path.resolve(__dirname, 'src/index.js'),
   output: {
-    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    filename: '[name].bundle.js',
     clean: true,
   },
   module: {
@@ -26,15 +24,24 @@ module.exports = {
           },
         ],
       },
-      {
-        test: /\.(png|svg|jpg|jpeg|gif)$/,
-        use: [
-          'file-loader',
-        ],
-      },
     ],
   },
+  devServer: {
+    open: true,
+    port: 9000,
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
+    },
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false,
+      },
+    },
+  },
   plugins: [
+    new CleanWebpackPlugin(),
+
     new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, 'dist/index.html'),
       template: path.resolve(__dirname, 'src/index.html'),
@@ -42,14 +49,22 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'src/images'),
-          to: path.resolve(__dirname, 'dist/images'),
+          from: path.resolve(__dirname, 'src/public'),
+          to: path.resolve(__dirname, 'dist/public'),
         },
       ],
     }),
     new FaviconsWebpackPlugin({
-      logo: path.resolve(__dirname, 'src/images/dicoding.jpeg'),
+      /**
+       * Full documentations:
+       * https://www.npmjs.com/package/favicons-webpack-plugin#user-content-advanced-usage
+       */
+      logo: path.resolve(__dirname, 'src/public/dicoding.jpeg'),
+
+      outputPath: 'public/favicons',
+
+      publicPath: 'public',
+      prefix: 'favicons/',
     }),
-    new CleanWebpackPlugin(),
   ],
 };
