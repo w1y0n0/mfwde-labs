@@ -5,10 +5,13 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src/index.js'),
+  entry: {
+    app: path.resolve(__dirname, 'src/index.js'),
+  },
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
   module: {
     rules: [
@@ -23,17 +26,15 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/,
+        use: [
+          'file-loader',
+        ],
+      },
     ],
   },
-  devServer: {
-    static: {
-      directory: path.resolve(__dirname, 'dist'),
-    },
-    open: true,
-    port: 9000,
-  },
   plugins: [
-    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, 'dist/index.html'),
       template: path.resolve(__dirname, 'src/index.html'),
@@ -41,18 +42,14 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'src/public'),
-          to: path.resolve(__dirname, 'dist/public'),
+          from: path.resolve(__dirname, 'src/images'),
+          to: path.resolve(__dirname, 'dist/images'),
         },
       ],
     }),
     new FaviconsWebpackPlugin({
-      logo: path.resolve(__dirname, 'src/public/dicoding.jpeg'),
-
-      outputPath: 'public/favicons',
-
-      publicPath: 'public',
-      prefix: 'favicons/',
+      logo: path.resolve(__dirname, 'src/images/dicoding.jpeg'),
     }),
+    new CleanWebpackPlugin(),
   ],
 };
