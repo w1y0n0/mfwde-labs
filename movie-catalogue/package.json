@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-dev": "webpack serve --config webpack.dev.js",
+    "start-dev": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "serve": "http-server dist --port 9000",
+    "serve": "http-server dist",
     "lint": "eslint ./src",
     "lint-fix": "eslint --fix ./src"
   },
   "keywords": [],
-  "author": "",
+  "author": "your_name <your_email@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -29,12 +29,10 @@
     "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0",
-    "webpack-merge": "^6.0.1",
-    "workbox-webpack-plugin": "^7.3.0"
+    "webpack-merge": "^6.0.1"
   },
   "dependencies": {
     "idb": "^8.0.0",
-    "regenerator-runtime": "^0.14.1",
-    "workbox-window": "^7.3.0"
+    "regenerator-runtime": "^0.14.1"
   }
 }
