@@ -11,7 +11,7 @@
     "lint-fix": "eslint --fix ./src"
   },
   "keywords": [],
-  "author": "",
+  "author": "your_name <your_email@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.26.0",
